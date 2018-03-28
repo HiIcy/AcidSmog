@@ -1,0 +1,7 @@
+*.pyc
+media/
+acid/dist/
+acid/src/assets/*
+AcidSmog/setting.py
+
+
