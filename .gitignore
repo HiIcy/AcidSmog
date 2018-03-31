@@ -3,5 +3,9 @@ media/
 acid/dist/
 acid/src/assets/*
 AcidSmog/setting.py
-
-
+smog/migrations/
+smog/indexx.html
+.idea/
+acid/build/
+acid/config/
+.qiniu_pythonsdk_hostscache.json

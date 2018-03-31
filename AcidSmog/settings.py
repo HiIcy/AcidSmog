@@ -38,18 +38,19 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'qiniustorage',
 	'corsheaders',
 	'rest_framework',
-	'rest_framework.authtoken',
+	'django_filters',
 	'smog',
 ]
 # REW:
 AUTH_USER_MODEL = "smog.User"
 
 MIDDLEWARE = [
+	'corsheaders.middleware.CorsMiddleware',
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
-	'corsheaders.middleware.CorsMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -62,7 +63,8 @@ ROOT_URLCONF = 'AcidSmog.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [BASE_DIR + '/acid/dist'],
+		'DIRS': [BASE_DIR + '/acid/dist',
+		         BASE_DIR + '/smog'],
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
@@ -74,6 +76,7 @@ TEMPLATES = [
 		},
 	},
 ]
+
 # 跨域配置
 CORS_ORIGIN_ALLOW_ALL = True
 WSGI_APPLICATION = 'AcidSmog.wsgi.application'
@@ -85,7 +88,7 @@ DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
 		'USER': 'postgres',
-		'PASSWORD': '111111',
+		'PASSWORD': '827600',
 		'NAME': 'acidsmog',
 		'HOST': '127.0.0.1'
 	}
@@ -113,8 +116,6 @@ REST_FRAMEWORK = {
 	'DEFAULT_AUTHENTICATION_CLASSES': (
 		'rest_framework.authentication.BasicAuthentication',
 		'rest_framework.authentication.SessionAuthentication',
-		'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-		# 'AcidSmog.smog.utils.ExpiringTokenAuthentication',
 	)
 }
 # Internationalization
@@ -131,23 +132,33 @@ USE_L10N = True
 USE_TZ = True
 
 # 七牛
+<<<<<<< Updated upstream
 
 QINIU_BUCKET_DEFAULT = 'imgcloud'
 
+=======
+QINIU_ACCESS_KEY = 'DWUGJwDGAACad8nshuvxB-QUjFQLoD9L31S-KJEK'
+QINIU_SECRET_KEY = '10WXedkY6ftZMGfpZB09DLQSbNAEXvkqRi5J8lIa'
+QINIU_BUCKET_NAME = 'imgcloud'
+QINIU_BUCKET_DOMAIN = 'orhowiej3.bkt.clouddn.com/'
+QINIU_SECURE_URL = False
+>>>>>>> Stashed changes
 PREFIX_URL = 'http://'
 
 # 文件系统更改
-MEDIA_URL = PREFIX_URL + QINIU_BUCKET_DOMAIN + '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# 外部访问文件的url
+MEDIA_URL = PREFIX_URL + QINIU_BUCKET_DOMAIN + "media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace("\\", "/")
+MEDIA_ROOT = 'media/'
 DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuMediaStorage'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
 	os.path.join(BASE_DIR, 'acid/dist/static')
 ]
+
 JWT_AUTH = {
-	'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=5),
+	'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=8),
 	'JWT_AUTH_HEADER_PREFIX': 'JWT'
 }

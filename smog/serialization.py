@@ -8,9 +8,7 @@ __Desc__      :
 from .models import User, Folder, Video, Tag, Subject, Picture
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-
-
-# todo:?
+from . import img_suffix
 
 
 class UserRegisterSerializers(serializers.ModelSerializer):
@@ -28,7 +26,8 @@ class UserRegisterSerializers(serializers.ModelSerializer):
 		return value
 
 	def create(self, validated_data):
-		return User.objects.create(**validated_data)
+		# 加密
+		return User.objects.create_user(**validated_data)
 
 	class Meta:
 		model = User
@@ -42,6 +41,20 @@ class UserDetailSerializers(serializers.ModelSerializer):
 
 
 class PictureSerializers(serializers.ModelSerializer):
+	name = serializers.SerializerMethodField()
+	type = serializers.SerializerMethodField()  # 方法序列化
+	def get_name(self, obj):
+		url = obj.content.url
+		return url.rsplit('/')[-1]
+
+	def get_type(self, obj):
+		try:
+			url = obj.content.url
+			if url[-4:] in img_suffix or url[-5:] in img_suffix:
+				return 'image'
+		except Exception:
+			return 'image'
+
 	class Meta:
 		model = Picture
 		fields = "__all__"
@@ -50,15 +63,30 @@ class PictureSerializers(serializers.ModelSerializer):
 class VideoSerializers(serializers.ModelSerializer):
 	class Meta:
 		model = Video
-		fields = "__all__"
+		fields = ("content", )
 
 
-class FolderSerializers(serializers.ModelSerializer):
+# TODO：用超链接的方式
+class FolderContentSerializers(serializers.ModelSerializer):
+	# user = serializers.HiddenField(default=serializers.CurrentUserDefault)
+	# 只展示id
+	# serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	pictures = PictureSerializers(many=True)
+	# videos = VideoSerializers(many=True)
 
 	class Meta:
 		model = Folder
+		# fields = ('id', 'name', 'create_time')
 		fields = "__all__"
+
+
+class UserFolderSerializers(serializers.ModelSerializer):
+	# folders = FolderSerializers(many=True)
+	# creator = serializers.HiddenField(def)
+
+	class Meta:
+		model = Folder
+		fields = ('id', 'name', 'create_time')
 
 
 class TagSerializers(serializers.ModelSerializer):
