@@ -7,9 +7,10 @@ var cookie = {
   },
   getCookie (name) {
     // FAQ:
-    var arr, reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
-    console.log(arr, ' ', reg)
-    if (arr === document.cookie.match(reg)) {
+    var arr,
+      reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
+    arr = document.cookie.match(reg)
+    if (arr) {
       return arr[2]
     } else {
       return null

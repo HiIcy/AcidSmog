@@ -20,12 +20,17 @@
             </el-submenu>
         </el-menu>
       </div>
-      <div class="login register">
+      <div class="login register" v-bind:class="{ 'isLogin': !IsLogin }" style="display: none">
         <router-link to="/login">
           <el-tag type="success">登陆</el-tag>
         </router-link>
         <router-link to="/register">
         <el-tag type="info">注册</el-tag>
+        </router-link>
+      </div>
+      <div class="homepage" :class="{ 'isLogin': IsLogin }" style="display: none">
+        <router-link>
+          <el-tag type="success">{{ $store.getters.userInfo.name }}</el-tag>
         </router-link>
       </div>
     </header>
@@ -41,7 +46,17 @@ export default {
     return {
       activeIndex: '1',
       activeIndex2: '1',
-      title: 'AcidSmog'
+      title: 'AcidSmog',
+      IsLogin: false
+    }
+  },
+  // watch; computed都不用先定义数据，
+  watch: {
+    /**
+     * @return {boolean}
+     */
+    IsLogin: function () {
+      return !!(this.$store.getters.userInfo.token)
     }
   }
 }
@@ -56,5 +71,8 @@ export default {
     position: relative;
     display: block;
     float: left;
+  }
+  .isLogin {
+    display: inline-block;
   }
 </style>

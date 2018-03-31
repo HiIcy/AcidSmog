@@ -12,9 +12,9 @@ import router from '../router/'
 axios.interceptors.request.use(
   config => {
     if (store.state.userInfo.token) {
-      config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-      /// 判断是否存在token，如果存在的话，则每个http header都加上token
-      config.headers.authentication = `token ${store.state.userInfo.token}`
+      // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      /// 判断是否存在token，如果存在的话，则每个http header都加上token 换成了jwt验证
+      config.headers.Authorization = `JWT ${store.getters.userInfo.token}`
     }
     return config
   },

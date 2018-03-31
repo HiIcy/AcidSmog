@@ -68,16 +68,16 @@ export default {
     login () {
       var _this = this
       login({
-        username: this.username,
-        password: this.password
+        username: this.ruleForm2.username,
+        password: this.ruleForm2.pass
       }).then((response) => {
-        console.log(response)
-        cookie.setCookie('name', this.username, 7)
+        console.log('response是什么', response)
+        cookie.setCookie('name', this.ruleForm2.username, 7)
         cookie.setCookie('token', response.data.token, 7)
         // vuex 分发action
         _this.$store.dispatch('setInfo')
         // 路由转移
-        this.$router.push({name: 'index'})
+        this.$router.push({name: 'folders'})
       }).catch(function (error) {
         if ('non_field_errors' in error) {
           _this.error = error.non_field_errors[0]
@@ -92,19 +92,19 @@ export default {
     },
     submitForm (formName) {
       // refs 获取ref属性的值
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-          this.login()
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+      this.login()
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    this.$store.dispatch('setFolder')
+    next()
+  },
+  created () {
+    cookie.delCooike('name')
+    cookie.delCooike('token')
   }
 }
 </script>
