@@ -131,10 +131,9 @@ USE_L10N = True
 USE_TZ = True
 
 # 七牛
-QINIU_ACCESS_KEY = 'DWUGJwDGAACad8nshuvxB-QUjFQLoD9L31S-KJEK'
-QINIU_SECRET_KEY = '10WXedkY6ftZMGfpZB09DLQSbNAEXvkqRi5J8lIa'
+
 QINIU_BUCKET_DEFAULT = 'imgcloud'
-QINIU_BUCKET_DOMAIN = 'idv093d.qiniudns.com/'
+
 PREFIX_URL = 'http://'
 
 # 文件系统更改
