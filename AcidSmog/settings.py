@@ -88,7 +88,7 @@ DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
 		'USER': 'postgres',
-		'PASSWORD': '827600',
+		'PASSWORD': '****',
 		'NAME': 'acidsmog',
 		'HOST': '127.0.0.1'
 	}
@@ -134,8 +134,8 @@ USE_TZ = True
 # 七牛
 
 QINIU_BUCKET_DEFAULT = 'imgcloud'
-QINIU_ACCESS_KEY = 'DWUGJwDGAACad8nshuvxB-QUjFQLoD9L31S-KJEK'
-QINIU_SECRET_KEY = '10WXedkY6ftZMGfpZB09DLQSbNAEXvkqRi5J8lIa'
+QINIU_ACCESS_KEY = '******'
+QINIU_SECRET_KEY = '1****a'
 QINIU_BUCKET_NAME = 'imgcloud'
 QINIU_BUCKET_DOMAIN = 'orhowiej3.bkt.clouddn.com/'
 QINIU_SECURE_URL = False
