@@ -20,6 +20,7 @@ from rest_framework import status
 from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler, JSONWebTokenSerializer
 from rest_framework import generics
 
+
 # 检索 注册
 class UserViewset(mixins.CreateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 	queryset = User.objects.all()
@@ -124,8 +125,11 @@ class PictureListView(generics.ListAPIView):
 	serializer_class = PictureSerializers
 	filter_backends = (rest_framework.DjangoFilterBackend,)
 	filter_fields = ('name', )
+
 	def get_queryset(self):
 		pass
+
+
 def upload_pic(request):
 	if request.method == "POST":
 		from django.core.files.storage import DefaultStorage

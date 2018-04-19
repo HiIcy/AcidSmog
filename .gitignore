@@ -2,10 +2,10 @@
 media/
 acid/dist/
 acid/src/assets/*
-AcidSmog/setting.py
 smog/migrations/
 smog/indexx.html
-.idea/
+.idea/*
 acid/build/
 acid/config/
 .qiniu_pythonsdk_hostscache.json
+txt.text
