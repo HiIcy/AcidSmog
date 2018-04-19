@@ -8,7 +8,7 @@ __Desc__      :
 from .models import User, Folder, Video, Tag, Subject, Picture
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from . import img_suffix
+from . import _img_suffix
 
 
 class UserRegisterSerializers(serializers.ModelSerializer):
@@ -43,6 +43,7 @@ class UserDetailSerializers(serializers.ModelSerializer):
 class PictureSerializers(serializers.ModelSerializer):
 	name = serializers.SerializerMethodField()
 	type = serializers.SerializerMethodField()  # 方法序列化
+
 	def get_name(self, obj):
 		url = obj.content.url
 		return url.rsplit('/')[-1]
@@ -50,7 +51,7 @@ class PictureSerializers(serializers.ModelSerializer):
 	def get_type(self, obj):
 		try:
 			url = obj.content.url
-			if url[-4:] in img_suffix or url[-5:] in img_suffix:
+			if url[-4:] in _img_suffix or url[-5:] in _img_suffix:
 				return 'image'
 		except Exception:
 			return 'image'
